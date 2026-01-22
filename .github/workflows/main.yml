@@ -1,42 +1,31 @@
+name: Semester Project Deployment
 
-name: HTML CSS Deployment
-
-# ================================
-# Trigger (Workflow kab run hoga)
-# ================================
 on:
-  
   push:
-   
     branches:
       - main
 
-# ================================
-# Jobs Section
-# ================================
-jobs:
-  
-  deploy-website:
+permissions:
+  contents: write
 
+jobs:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Checkout Repository Code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Environment
-        run: echo "Environment ready for deployment"
-
-
-      - name: Deploy HTML & CSS Website
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-       
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
           publish_dir: ./
 
-      
-      - name: Deployment Status
-        run: echo "Website successfully deployed using GitHub Actions"
+      - name: Show GitHub Pages Link
+        run: |
+          echo "===================================="
+          echo " GitHub Pages Website Link "
+          echo "===================================="
+          echo "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          echo "===================================="
